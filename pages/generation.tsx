@@ -20,7 +20,7 @@ const stringifiedParamFromPrompt = (prompt: String) => {
 
 const DynamicText = ({ prediction }: { prediction: String }) => {
   const [text, setText] = useState("");
-  const [fullText, _setFullText] = useState(prediction);
+  const [fullText, setFullText] = useState(prediction);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -30,11 +30,17 @@ const DynamicText = ({ prediction }: { prediction: String }) => {
         setIndex(index + 1);
       }, 65);
     }
-  }, [index]);
+  }, [index, prediction]);
+
+  useEffect(() => {
+    setText("");
+    setIndex(0);
+    setFullText(prediction);
+  }, [prediction]);
 
   return (
     <article className="prose">
-      <h3 className="textarea  bg-white w-11/12 h-44">{text}</h3>
+      <h3 className="textarea bg-white w-11/12 h-44">{text}</h3>
     </article>
   );
 };
@@ -42,18 +48,15 @@ const DynamicText = ({ prediction }: { prediction: String }) => {
 const Content = () => {
   const [prompt, setprompt] = useState<String>("");
   const [prediction, setPrediction] = useState<String | null>(null);
-  const [message, closeSse] = useSse();
-
-  useEffect(() => {
-    return () => {
-      closeSse();
-    };
-  }, []);
+  const [message] = useSse();
 
   useEffect(() => {
     if (message.tag == "WorkerString") {
       logger("DEBUG", "message", message);
-      setPrediction(() => message.value!);
+      setPrediction(() => {
+        console.log("here");
+        return message.value!;
+      });
     }
   }, [message]);
 
@@ -88,7 +91,7 @@ const Content = () => {
       </div>
       <div className="grid w-11/12 h-48 my-10 mx-auto place-content-center bg-white">
         <div className="container flex w-full max-w-xs">
-          {prediction ? <DynamicText prediction={prediction!} /> : null}
+          {prediction && <DynamicText prediction={prediction} />}
         </div>
       </div>
     </>
@@ -98,5 +101,5 @@ const Content = () => {
 export default function Generation() {
   const [userId] = useAuth();
 
-  return <>{userId ? <Content /> : null}</>;
+  return userId && <Content />;
 }

@@ -1,4 +1,4 @@
-export const URL_BACKEND = "https://cuda.ai-generated.fr:8443";
+export const URL_BACKEND = "https://cuda.ai-generated.fr:6443";
 export const URL_AUTH = `${URL_BACKEND}/cookie`;
 export const URL_SSE = `${URL_BACKEND}/sse`;
 export const URL_RUN_TASK = `${URL_BACKEND}/api/command/start`;

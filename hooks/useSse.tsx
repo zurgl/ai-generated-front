@@ -5,21 +5,25 @@ import { useCallback, useEffect, useState } from "react";
 
 const defaultMessage = { timestamp: 0, tag: "Health" } as Message;
 
-export function useSse(): [Message, () => void] {
+export function useSse(): [Message] {
   const [message, setMessage] = useState<Message>(defaultMessage);
+  const [mounted, setMounted] = useState(false);
   const [sse, setSse] = useState<EventSource | null>(null);
 
   useEffect(() => {
-    seeConnection();
+    if (!mounted) {
+      setMounted(true);
+      seeConnection();
+    }
 
     return () => {
-      if (sse) {
-        logger("DEBUG", "sseHooksCloseEvent", { event: "unMountHooksEvent" });
-        sse.close();
+      if (mounted) {
+        sse!.close();
         setSse(null);
+        logger("DEBUG", "sseHooksCloseEvent", { event: "unMountHooksEvent" });
       }
     };
-  }, []);
+  }, [sse]);
 
   const seeConnection = useCallback(() => {
     if (!sse) {
@@ -50,13 +54,5 @@ export function useSse(): [Message, () => void] {
     }
   }, [sse]);
 
-  const closeSse = () => {
-    if (sse) {
-      logger("DEBUG", "sseHooksCloseEvent", { event: "unMountHooksEvent" });
-      sse.close();
-      setSse(null);
-    }
-  };
-
-  return [message, closeSse];
+  return [message];
 }

@@ -64,6 +64,10 @@ export default function Lambda() {
   const [userId] = useAuth();
 
   return (
-    <div className="container mx-auto py-10">{userId ? <Content /> : null}</div>
+    userId && (
+      <div className="container mx-auto py-10">
+        {userId ? <Content /> : null}
+      </div>
+    )
   );
 }
