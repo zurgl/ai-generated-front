@@ -1,4 +1,4 @@
-export const PORT = "6443";
+export const PORT = "7443";
 export const URL_BACKEND = `https://cuda.ai-generated.fr:${PORT}`;
 export const URL_AUTH = `${URL_BACKEND}/cookie`;
 export const URL_SSE = `${URL_BACKEND}/sse`;

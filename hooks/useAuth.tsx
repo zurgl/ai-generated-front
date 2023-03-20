@@ -26,7 +26,7 @@ export default function useAuth(): [String | null] {
         logger("DEBUG", "response", response);
         if (!response.ok) {
           throw new Error(
-            `An error has occured: ${response.status} - ${response.statusText}`
+            `An error has occured: ${response.status} - ${response.statusText}`,
           );
         }
 

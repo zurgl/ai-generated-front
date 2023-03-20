@@ -62,8 +62,8 @@ const Content = () => {
 
   return (
     <>
-      <div className="grid w-4/5 h-48 mx-auto place-content-center my-10 bg-white">
-        <div className="container flex-auto mr-72">
+      <div className="grid w-4/5 h-48 mx-auto place-content-center my-10 bg-white dark:bg-slate-800">
+        <div className="container flex-auto mr-72 dark:bg-slate-800 bg-white">
           <input
             type="text"
             placeholder={suggestedPrompt}
@@ -81,7 +81,7 @@ const Content = () => {
                   tag: Tag.StartWorkerWithJsonStr,
                   json_str: stringifiedParamFromPrompt(prompt),
                 },
-                URL_RUN_MODEL
+                URL_RUN_MODEL,
               )
             }
           >

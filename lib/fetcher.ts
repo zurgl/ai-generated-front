@@ -57,12 +57,12 @@ export const fetcher = async (data: PostData, url: string) => {
 
     if (!response.ok) {
       throw new Error(
-        `An error has occured: ${response.status} - ${response.statusText}`
+        `An error has occured: ${response.status} - ${response.statusText}`,
       );
     }
   } catch (error) {
     throw new Error(
-      `An error has occured: Fetcher failed, for path: ${url}, with: ${error}`
+      `An error has occured: Fetcher failed, for path: ${url}, with: ${error}`,
     );
   }
 };

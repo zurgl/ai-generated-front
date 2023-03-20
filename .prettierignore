@@ -1,0 +1,7 @@
+.vercel
+.next
+build
+html
+static
+node_modules
+
