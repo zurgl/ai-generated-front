@@ -22,7 +22,7 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": [
     "node_modules",
-    "archive",
+    "archives",
     "ssl",
     "https_local_server",
     ".vscode",

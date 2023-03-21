@@ -3,9 +3,8 @@ import "#/styles/globals.css";
 import React, { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
-import Header from "#/components/Header";
-import Footer from "#/components/Footer";
 import { Inter } from "@next/font/google";
+import { Header, Footer } from "#/ui/index";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,12 +21,14 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [mounted]);
 
   return mounted ? (
-    <ThemeProvider attribute="class">
-      {/* <Header /> */}
+    <ThemeProvider attribute="class" enableSystem={false}>
+      <Header />
       <div className={`${inter.variable} font-sans overflow-auto no-scrollbar`}>
         <Component {...pageProps} />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </ThemeProvider>
-  ) : null;
+  ) : (
+    <div>Loading ...</div>
+  );
 }

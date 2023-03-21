@@ -13,7 +13,7 @@
     "**/node_modules": true,
     "**/.next": true,
     "./pnpm-lock.yaml": true,
-    ".env": true
+    ".env": false
   },
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true

@@ -2,9 +2,9 @@ export function MoonIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="#fff"
-      stroke="#fff"
-      strokeWidth={1}
+      fill="#000"
+      stroke="#000"
+      strokeWidth={1.5}
       viewBox="0 0 24 24"
       className="w-8 h-8"
     >
