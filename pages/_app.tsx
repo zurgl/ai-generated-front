@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "@next/font/google";
 import { Header, Footer } from "#/ui/index";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,13 +22,18 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [mounted]);
 
   return mounted ? (
-    <ThemeProvider attribute="class" enableSystem={false}>
-      <Header />
-      <div className={`${inter.variable} font-sans overflow-auto no-scrollbar`}>
-        <Component {...pageProps} />
-      </div>
-      <Footer />
-    </ThemeProvider>
+    <>
+      <ThemeProvider attribute="class" enableSystem={false}>
+        <Header />
+        <div
+          className={`${inter.variable} font-sans overflow-auto no-scrollbar`}
+        >
+          <Component {...pageProps} />
+        </div>
+        <Footer />
+      </ThemeProvider>
+      <Analytics />
+    </>
   ) : (
     <div>Loading ...</div>
   );
