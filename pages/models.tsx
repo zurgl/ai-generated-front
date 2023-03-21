@@ -3,13 +3,13 @@ import { Banner } from "#/ui/index";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
-import dialoguePicDark from "../public/image/dialogue-light.png";
-import resumePicDark from "../public/image/resume-dark.png";
-import sentimentPicDark from "../public/image/sentiment-light.png";
+import dialoguePicDark from "../public/image/dialogue-light.jpg";
+import resumePicDark from "../public/image/resume-dark.jpg";
+import sentimentPicDark from "../public/image/sentiment-light.jpg";
 
-import dialoguePicLight from "../public/image/dialogue-dark.png";
-import resumePicLight from "../public/image/resume-light.png";
-import sentimentPicLight from "../public/image/sentiment-dark.png";
+import dialoguePicLight from "../public/image/dialogue-dark.jpg";
+import resumePicLight from "../public/image/resume-light.jpg";
+import sentimentPicLight from "../public/image/sentiment-dark.jpg";
 
 type ModelCardDataT = {
   title: String;
