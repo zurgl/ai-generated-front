@@ -1,18 +1,33 @@
 import { useState } from "react";
+import { ToastContainer, toast, Theme } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useTheme } from "next-themes";
 
 export default function NewsLetter() {
-  const [userEmail, setUserEmail] = useState<String | null>(null);
-  console.log(userEmail);
+  const [_userEmail, setUserEmail] = useState<String | null>(null);
+  const { theme } = useTheme();
 
-  const callAPI = async () => {
-    try {
-      const res = await fetch(`/api/send-email`);
-      const data = await res.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const callAPI = async () => {
+  //   try {
+  //     const res = await fetch(`/api/send-email`);
+  //     const data = await res.json();
+  //     console.log(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const notify = () =>
+    toast.error("Subscription not open Yet!", {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: theme! as Theme,
+    });
 
   return (
     <div className=" bg-slate-200 dark:bg-slate-800 h-screen flex justify-center items-center overflow-hidden">
@@ -75,10 +90,20 @@ export default function NewsLetter() {
               <button
                 type="submit"
                 className="flex-none rounded-md bg-cyan-800 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ml-2"
-                onClick={callAPI}
+                onClick={notify}
               >
                 Validate
               </button>
+              <ToastContainer
+                position="bottom-center"
+                autoClose={3500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                theme="light"
+                className="mb-40"
+              />
             </div>
           </div>
         </div>
