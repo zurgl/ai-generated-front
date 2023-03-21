@@ -41,7 +41,6 @@ const headersData = {
 
 export function Header() {
   const { theme, setTheme } = useTheme();
-  console.log(theme);
 
   return (
     <header className="inset-x-0 z-50 px-4 bg-slate-50 dark:bg-black fixed top-0">
@@ -86,17 +85,29 @@ export function Header() {
           <a
             href="https://twitter.com/0x_ai_generated"
             className="w-8 h-8 pr-12"
+            target="_blank"
+            rel="noreferrer"
           >
             <span aria-hidden="true">
               <TwitterIcon theme={theme!} />
             </span>
           </a>
-          <a href="https://discord.gg/P5wwzpDF" className="w-8 h-8 pr-12">
+          <a
+            href="https://discord.gg/P5wwzpDF"
+            className="w-8 h-8 pr-12"
+            target="_blank"
+            rel="noreferrer"
+          >
             <span aria-hidden="true">
               <DiscordIcon theme={theme!} />
             </span>
           </a>
-          <a href="https://github.com/ai-generated" className="w-8 h-8 pr-12">
+          <a
+            href="https://github.com/ai-generated"
+            className="w-8 h-8 pr-12"
+            target="_blank"
+            rel="noreferrer"
+          >
             <span aria-hidden="true">
               <GitHubIcon theme={theme!} />
             </span>
