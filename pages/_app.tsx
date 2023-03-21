@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "@next/font/google";
 import { Header, Footer } from "#/ui/index";
 import { Analytics } from "@vercel/analytics/react";
+import Skeleton from "#/components/Skeleton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Analytics />
     </>
   ) : (
-    <div>Loading ...</div>
+    <Skeleton />
   );
 }

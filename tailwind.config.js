@@ -17,10 +17,8 @@ module.exports = {
         sans: ["var(--font-inter)", ...fontFamily.sans],
       },
       backgroundImage: {
-        circuit: "url('/circuit-board.svg')",
+        logo: "url('/logo.svg')",
         black_circuit: "url('/dark-circuit-board.svg')",
-        sand: "url('/sand.svg')",
-        "gradient-radial": "radial-gradient(circle, var(--tw-gradient-stops))",
       },
       colors: {
         ocean: {
