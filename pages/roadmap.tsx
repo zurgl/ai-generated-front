@@ -1,6 +1,6 @@
 export default function Roadmap() {
   return (
-    <div className="bg-slate-200 dark:bg-slate-800 h-screen flex flex-col justify-evenly items-center overflow-hidden">
+    <div className="bg-slate-200 dark:bg-slate-800 h-[calc(100vh_-_172px)] flex flex-col justify-evenly items-center overflow-hidden">
       <div className="text-2xl font-semibold  pt-8">
         AI Generated from zero to production
       </div>

@@ -3,7 +3,6 @@ export type Message = {
   task_id: String;
   seed: number;
   tag: MessageType;
-  priority: number;
   status: StatusTask;
   value?: String;
   result?: String;

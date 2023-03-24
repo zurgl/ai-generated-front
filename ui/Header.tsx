@@ -43,7 +43,7 @@ export function Header() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="inset-x-0 z-50 px-4 bg-slate-50 dark:bg-black fixed top-0">
+    <header className="inset-x-0 z-50 px-4 bg-slate-50 dark:bg-black">
       <nav
         className="flex items-center justify-between p-6 lg:px-8 border-b-4 border-black dark:border-pink-900"
         aria-label="Global"

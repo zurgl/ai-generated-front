@@ -30,7 +30,7 @@ export default function NewsLetter() {
     });
 
   return (
-    <div className=" bg-slate-200 dark:bg-slate-800 h-screen flex justify-center items-center overflow-hidden">
+    <div className=" bg-slate-200 dark:bg-slate-800 h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden">
       <div className="relative isolate px-6">
         <div className="absolute -top-64 -z-10 transform-gpu blur-3xl opacity-80">
           <svg
@@ -111,3 +111,12 @@ export default function NewsLetter() {
     </div>
   );
 }
+
+/*
+curl -s --user 'api:1d9ab571a789e1444920c0f647c63dfa-87c34c41-26c61e12' \
+  https://api.mailgun.net/v3/mgx.dnb.lol/messages \
+  -F from='AI Generated mailgun@ai-generated.dev' \
+  -F to='elayar.yacine@gmail.com' \
+  -F subject='Mailgun is working' \
+  -F text='Testing some Mailgun awesomeness!'
+*/

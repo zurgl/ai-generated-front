@@ -1,77 +1,115 @@
 /* eslint-disable @next/next/no-img-element */
 import { Banner } from "#/ui/index";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useTheme } from "next-themes";
 
-import dialoguePicDark from "../public/image/dialogue-light.jpg";
-import resumePicDark from "../public/image/resume-dark.jpg";
-import sentimentPicDark from "../public/image/sentiment-light.jpg";
+import dialoguePicDark from "../public/image/dialogue.jpg";
+import resumePicDark from "../public/image/resume.jpg";
+import sentimentPicDark from "../public/image/sentiment.jpg";
 
-import dialoguePicLight from "../public/image/dialogue-dark.jpg";
-import resumePicLight from "../public/image/resume-light.jpg";
-import sentimentPicLight from "../public/image/sentiment-dark.jpg";
+import Link from "next/link";
 
 type ModelCardDataT = {
   title: String;
   alt: string;
   content: String;
-  imageSrc: any;
+  available: boolean;
+  imageSrc: StaticImageData;
+  priority: boolean;
 };
 
-const modelCardData = (theme: String) => [
-  {
-    title: "Summarization",
-    alt: "Summarization AI Model",
-    content:
-      "Don't have time to read this long and complex article. Just want a quick resume. Good new, I guess we have something for you. This model is your perfect match",
-    imageSrc: theme === "light" ? resumePicLight : resumePicDark,
-  },
-  {
-    title: "Sentiment analysis",
-    alt: "Sentiment analysis AI Model",
-    content:
-      "Want to build a tools to scan the mood of a market, but don't have enough time. This AI Model has been design to fit your needs. Let's give it a try.",
-    imageSrc: theme === "light" ? sentimentPicLight : sentimentPicDark,
-  },
-  {
-    title: "Dialogue Model",
-    alt: "Dialogue AI Model",
-    content:
-      "Do you feel bored today don't know what to do? Let's speak with Our AI model, maybe he'll be able to find the word to warm your soul and give you more motivation",
-    imageSrc: theme === "light" ? dialoguePicLight : dialoguePicDark,
-  },
-];
+export async function getStaticProps() {
+  const modelCardData = [
+    {
+      title: "Summarization",
+      alt: "Summarization AI Model",
+      content:
+        "Don't have the time to read a long and complex article. This model is your perfect match.",
+      imageSrc: resumePicDark,
+      priority: true,
+      available: false,
+    },
+    {
+      title: "Sentiment analysis",
+      alt: "Sentiment analysis AI Model",
+      content:
+        "Want to build a tools to scan the mood of a market. This AI model should fit your needs.",
+      imageSrc: sentimentPicDark,
+      priority: false,
+      available: false,
+    },
+    {
+      title: "Dialogue Model",
+      alt: "Dialogue AI Model",
+      content:
+        "Feeling bored? Don't know what to do? Let's speak with this AI, and follow his advices.",
+      imageSrc: dialoguePicDark,
+      priority: false,
+      available: false,
+    },
+  ];
+
+  return {
+    props: {
+      modelCardData,
+    },
+  };
+}
 
 const ModelCard = ({ data }: { data: ModelCardDataT }) => {
   return (
-    <div className="max-w-sm max-h-fit rounded-xl overflow-hidden shadow-lg shadow-gray-900 dark:shadow-gray-50  bg-cyan-900 dark:bg-yellow-100">
-      <Image src={data.imageSrc} alt={data.alt} width={500} height={500} />
-      <div className="px-6 py-4">
-        <h3 className="font-bold text-2xl mb-2 text-gray-50 dark:text-black flex justify-center">
-          {data.title}
-        </h3>
-        <article className="text-base text-gray-50 dark:text-black font-medium">
-          {data.content}
-        </article>
+    <div className="flex-col items-center justify">
+      <div className="rounded-xl overflow-hidden shadow-lg shadow-gray-900 dark:shadow-gray-50 bg-cyan-900 dark:bg-yellow-100">
+        <Image
+          src={data.imageSrc}
+          alt={data.alt}
+          width={350}
+          height={350}
+          priority={data.priority}
+        />
+        <div className="mx-auto py-2">
+          <h3 className="font-bold text-2xl mb-2 text-gray-50 dark:text-black flex justify-center">
+            {data.title}
+          </h3>
+          <article className="text-base text-gray-50 dark:text-black font-medium h-20 w-72 mx-auto text-center">
+            {data.content}
+          </article>
+        </div>
+      </div>
+      <div className="flex items-center justify-center pt-6 h-28">
+        <div className="relative">
+          <div
+            className="absolute -inset-1 rounded-lg opacity-75 blur
+                bg-gradient-to-r from-black via-blue-700 to-lime-900
+                dark:bg-gradient-to-r dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500"
+          ></div>
+          <button
+            className="relative rounded-lg bg-black px-7 py-4 text-xl text-yellow-50"
+            disabled={data.available}
+          >
+            <Link href="#">Get Started</Link>
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default function Card() {
+export default function Card({
+  modelCardData,
+}: {
+  modelCardData: ModelCardDataT[];
+}) {
   const { theme } = useTheme();
-
   return (
     <div
-      className="h-screen pt-2 bg-gradient-radial from-gray-400 to-white
+      className="h-[calc(100vh_-_172px)] bg-gradient-radial from-gray-400 to-white
     dark:bg-gradient-radial dark:from-blue-900 dark:to-black overflow-auto"
     >
-      <div className="pt-20">
-        <Banner />
-      </div>
-      <div className="w-screen flex justify-end items-center py-28">
+      <Banner />
+      <div className="w-screen h-[calc(100vh_-_240px)] flex justify-end items-center py-20">
         <div className="container mx-auto flex justify-evenly items-center">
-          {modelCardData(theme!).map((data, index) => {
+          {modelCardData.map((data, index) => {
             return <ModelCard key={index} data={data} />;
           })}
         </div>

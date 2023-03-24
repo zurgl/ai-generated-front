@@ -11,10 +11,6 @@ type CookieR = {
 export default function useAuth(): [String | null] {
   const [userId, SetUserId] = useState<String | null>(null);
 
-  useEffect(() => {
-    try_connect().catch(console.error);
-  }, []);
-
   const try_connect = useCallback(async () => {
     if (!userId) {
       try {
@@ -40,7 +36,11 @@ export default function useAuth(): [String | null] {
         console.error(err);
       }
     }
-  }, []);
+  }, [userId]);
+
+  useEffect(() => {
+    try_connect().catch(console.error);
+  }, [try_connect]);
 
   return [userId];
 }

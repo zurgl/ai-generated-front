@@ -1,12 +1,12 @@
 import "#/styles/globals.css";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "@next/font/google";
 import { Header, Footer } from "#/ui/index";
 import { Analytics } from "@vercel/analytics/react";
-import Skeleton from "#/components/Skeleton";
+import { useMounted } from "#/hooks";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,13 +14,7 @@ const inter = Inter({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [mounted, setMounter] = useState(false);
-
-  useEffect(() => {
-    if (!mounted) {
-      setMounter(true);
-    }
-  }, [mounted]);
+  const mounted = useMounted();
 
   return mounted ? (
     <>
@@ -33,9 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
         <Footer />
       </ThemeProvider>
-      <Analytics />
+      {process.env.ENV === "PROD" ? <Analytics /> : null}
     </>
-  ) : (
-    <Skeleton />
-  );
+  ) : null;
 }

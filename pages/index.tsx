@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className=" bg-slate-200 dark:bg-slate-800 h-screen flex justify-center items-center overflow-hidden">
+    <div className=" bg-slate-200 dark:bg-slate-800 h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden">
       <div className="relative isolate px-6">
         <div className="absolute -top-64 -z-10 transform-gpu blur-3xl opacity-80">
           <svg
@@ -40,7 +40,10 @@ export default function Home() {
               models on-demand. The rent of available GPU computation will be
               perform using the Solana crypto-ecosystem.
             </article>
-            <div className="flex items-center justify-center pt-16 h-32">
+            <Link
+              href="/models"
+              className="flex items-center justify-center pt-16 h-32"
+            >
               <div className="relative">
                 <div
                   className="absolute -inset-1 rounded-lg opacity-75 blur
@@ -48,10 +51,11 @@ export default function Home() {
                 dark:bg-gradient-to-r dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500"
                 ></div>
                 <button className="relative rounded-lg bg-black px-7 py-4 text-xl text-yellow-50">
-                  <Link href="/models">Get Started</Link>
+                  {/* <Link href="/models">Get Started</Link> */}
+                  Get Started
                 </button>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

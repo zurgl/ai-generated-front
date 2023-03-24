@@ -6,7 +6,7 @@ export function Banner() {
   const { theme } = useTheme();
 
   return isVisible ? (
-    <div className="relative isolate flex items-center gap-x-6 bg-cyan-700 dark:bg-yellow-200 py-2.5 px-6 sm:px-3.5 sm:before:flex-1">
+    <div className="relative isolate flex items-center gap-x-6 bg-cyan-700 dark:bg-yellow-200 py-2.5 sm:px-3.5 sm:before:flex-1">
       <div className="flex flex-wrap items-center gap-y-2 gap-x-12">
         <p className="text-xl leading-6 text-gray-50 dark:text-gray-900 font-semibold">
           <strong className="font-bold">Stable Diffusion</strong>
