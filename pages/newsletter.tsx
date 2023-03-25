@@ -1,33 +1,32 @@
 import { useState } from "react";
-import { ToastContainer, toast, Theme } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useTheme } from "next-themes";
 
 export default function NewsLetter() {
   const [_userEmail, setUserEmail] = useState<String | null>(null);
-  const { theme } = useTheme();
 
-  // const callAPI = async () => {
-  //   try {
-  //     const res = await fetch(`/api/send-email`);
-  //     const data = await res.json();
-  //     console.log(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const callAPI = async () => {
+    try {
+      const res = await fetch(`/api/send-email`);
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const notify = () =>
-    toast.info("Subscription not yet open!", {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: theme! as Theme,
-    });
+  // const notify = () =>
+  //   toast.info("Subscription not yet open!", {
+  //     position: "bottom-center",
+  //     autoClose: 2500,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: false,
+  //     draggable: true,
+  //     pauseOnFocusLoss: false,
+  //     progress: undefined,
+  //     theme: "dark",
+  //   });
 
   return (
     <div className=" bg-slate-200 dark:bg-slate-800 h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden">
@@ -51,8 +50,8 @@ export default function NewsLetter() {
                 y2="474.645"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#9089FC" />
-                <stop offset="1" stopColor="#FF80B5" />
+                <stop stopColor="#00f" />
+                <stop offset="1" stopColor="#f00" />
               </linearGradient>
             </defs>
           </svg>
@@ -67,7 +66,7 @@ export default function NewsLetter() {
               <span className="text-cyan-800 dark:text-pink-400">
                 AI Generated
               </span>{" "}
-              and subscribe to the newsletter. Twice a week content will be send
+              and subscribe to the newsletter. Once a week content will be send
               to your mailbox.
             </article>
             <div className="mt-10 flex max-w-md mx-auto">
@@ -90,22 +89,11 @@ export default function NewsLetter() {
               <button
                 type="submit"
                 className="flex-none rounded-md bg-cyan-800 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ml-2"
-                onClick={notify}
+                onClick={callAPI}
               >
                 Validate
               </button>
-              <ToastContainer
-                position="bottom-center"
-                autoClose={3500}
-                hideProgressBar={false}
-                newestOnTop={false}
-                pauseOnFocusLoss={false}
-                pauseOnHover={false}
-                closeOnClick
-                rtl={false}
-                theme="light"
-                className="mb-40"
-              />
+              <ToastContainer className="mb-40" />
             </div>
           </div>
         </div>

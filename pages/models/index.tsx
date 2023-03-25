@@ -5,9 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "next-themes";
 
 import { Banner } from "#/ui/index";
-import dialoguePicDark from "../public/image/dialogue.jpg";
-import resumePicDark from "../public/image/resume.jpg";
-import sentimentPicDark from "../public/image/sentiment.jpg";
+import dialoguePicDark from "#/public/image/dialogue.jpg";
+import resumePicDark from "#/public/image/resume.jpg";
+import sentimentPicDark from "#/public/image/sentiment.jpg";
 
 type ModelCardDataT = {
   title: String;
