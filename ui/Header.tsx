@@ -18,9 +18,14 @@ type HeadersDataT = {
   }[];
 };
 
-const headersData = {
+const headersData: HeadersDataT = {
   brand: "AI Generated",
   navLinks: [
+    {
+      isExternal: false,
+      link: "models",
+      text: "Models",
+    },
     {
       isExternal: false,
       link: "roadmap",
@@ -37,7 +42,7 @@ const headersData = {
       text: "Newsletter",
     },
   ],
-} as HeadersDataT;
+};
 
 export function Header() {
   const { theme, setTheme } = useTheme();

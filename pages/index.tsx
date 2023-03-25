@@ -51,7 +51,6 @@ export default function Home() {
                 dark:bg-gradient-to-r dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500"
                 ></div>
                 <button className="relative rounded-lg bg-black px-7 py-4 text-xl text-yellow-50">
-                  {/* <Link href="/models">Get Started</Link> */}
                   Get Started
                 </button>
               </div>

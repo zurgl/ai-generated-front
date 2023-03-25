@@ -18,7 +18,7 @@ export default function NewsLetter() {
   // };
 
   const notify = () =>
-    toast.error("Subscription not open Yet!", {
+    toast.info("Subscription not yet open!", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -99,6 +99,8 @@ export default function NewsLetter() {
                 autoClose={3500}
                 hideProgressBar={false}
                 newestOnTop={false}
+                pauseOnFocusLoss={false}
+                pauseOnHover={false}
                 closeOnClick
                 rtl={false}
                 theme="light"

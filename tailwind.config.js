@@ -19,6 +19,8 @@ module.exports = {
       backgroundImage: {
         logo: "url('/logo.svg')",
         black_circuit: "url('/dark-circuit-board.svg')",
+        plant: "url('/svg/plant.svg')",
+        "plant-dark": "url('/svg/plant-dark.svg')",
       },
       colors: {
         ocean: {

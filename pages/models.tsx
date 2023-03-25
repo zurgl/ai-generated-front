@@ -1,13 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
-import { Banner } from "#/ui/index";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
+import { ToastContainer, toast, Theme, Id } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "next-themes";
 
+import { Banner } from "#/ui/index";
 import dialoguePicDark from "../public/image/dialogue.jpg";
 import resumePicDark from "../public/image/resume.jpg";
 import sentimentPicDark from "../public/image/sentiment.jpg";
-
-import Link from "next/link";
 
 type ModelCardDataT = {
   title: String;
@@ -19,7 +19,7 @@ type ModelCardDataT = {
 };
 
 export async function getStaticProps() {
-  const modelCardData = [
+  const modelCardData: ModelCardDataT[] = [
     {
       title: "Summarization",
       alt: "Summarization AI Model",
@@ -56,7 +56,13 @@ export async function getStaticProps() {
   };
 }
 
-const ModelCard = ({ data }: { data: ModelCardDataT }) => {
+const ModelCard = ({
+  data,
+  notify,
+}: {
+  data: ModelCardDataT;
+  notify: () => Id;
+}) => {
   return (
     <div className="flex-col items-center justify">
       <div className="rounded-xl overflow-hidden shadow-lg shadow-gray-900 dark:shadow-gray-50 bg-cyan-900 dark:bg-yellow-100">
@@ -86,6 +92,7 @@ const ModelCard = ({ data }: { data: ModelCardDataT }) => {
           <button
             className="relative rounded-lg bg-black px-7 py-4 text-xl text-yellow-50"
             disabled={data.available}
+            onClick={notify}
           >
             <Link href="#">Get Started</Link>
           </button>
@@ -101,6 +108,22 @@ export default function Card({
   modelCardData: ModelCardDataT[];
 }) {
   const { theme } = useTheme();
+  console.log(theme);
+  const toastTheme = theme === "light" ? "dark" : "colored";
+  console.log(toastTheme);
+
+  const notify = () =>
+    toast.info("Model not yet available!", {
+      position: "bottom-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: toastTheme! as Theme,
+    });
+
   return (
     <div
       className="h-[calc(100vh_-_172px)] bg-gradient-radial from-gray-400 to-white
@@ -110,10 +133,11 @@ export default function Card({
       <div className="w-screen h-[calc(100vh_-_240px)] flex justify-end items-center py-20">
         <div className="container mx-auto flex justify-evenly items-center">
           {modelCardData.map((data, index) => {
-            return <ModelCard key={index} data={data} />;
+            return <ModelCard key={index} data={data} notify={notify} />;
           })}
         </div>
       </div>
+      <ToastContainer position="bottom-center" className="mb-20" />
     </div>
   );
 }
