@@ -55,9 +55,10 @@ const Card = ({ contentBox }: { contentBox: ContentBox }) => {
     <div
       className="bg-gradient-to-r from-black via-blue-700 to-lime-900 p-1 rounded-md
     dark:bg-gradient-to-r dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500
+    
     "
     >
-      <div className="flex flex-col justify-center items-center bg-white dark:bg-black p-2 rounded-md">
+      <div className="flex flex-col justify-center items-center bg-slate-300 dark:bg-gray-900 p-2 rounded-md">
         <h2
           className={`${
             contentBox.position === "left"
@@ -94,7 +95,7 @@ const Card = ({ contentBox }: { contentBox: ContentBox }) => {
 
 export default function Roadmap() {
   return (
-    <div className="dark:bg-plant-dark bg-plant h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden w-screen, bg-center bg-no-repeat bg-contain">
+    <div className="dark:bg-plant-dark bg-plant h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden w-screen, bg-center bg-no-repeat bg-contain bg-slate-200 dark:bg-black">
       <div className="relative w-9/12 h-5/6">
         <div className="absolute left-0 top-0 h-40 w-1/3 rounded-2xl">
           <Card contentBox={content[0]} />

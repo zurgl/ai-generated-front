@@ -21,6 +21,7 @@ module.exports = {
         black_circuit: "url('/dark-circuit-board.svg')",
         plant: "url('/svg/plant.svg')",
         "plant-dark": "url('/svg/plant-dark.svg')",
+        "gradient-radial": "radial-gradient(circle, var(--tw-gradient-stops))",
       },
       colors: {
         ocean: {
