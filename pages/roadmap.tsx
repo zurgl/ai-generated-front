@@ -8,7 +8,7 @@ type StepBox = {
 type ContentBox = {
   deadline: string;
   milestone: string;
-  position: Position;
+  is_left: boolean;
   step: StepBox[];
   innerStyle: string;
 };
@@ -31,7 +31,7 @@ const content = [
         status: true,
       },
     ],
-    position: "left" as Position,
+    is_left: true,
     innerStyle: "top-[0rem]",
   },
   {
@@ -42,7 +42,7 @@ const content = [
       { info: "Release of Stable diffusion", status: false },
       { info: "Setup Authentification", status: false },
     ],
-    position: "right" as Position,
+    is_left: false,
     innerStyle: "top-[11rem]",
   },
   {
@@ -53,7 +53,7 @@ const content = [
       { info: "Stable version of Stable diffusion", status: false },
       { info: "Support mobile device", status: false },
     ],
-    position: "left" as Position,
+    is_left: true,
     innerStyle: "top-[22rem]",
   },
   {
@@ -64,16 +64,18 @@ const content = [
       { info: "Audit of Smart Contract", status: false },
       { info: "Going open source", status: false },
     ],
-    position: "right" as Position,
+    is_left: false,
     innerStyle: "top-[33rem]",
   },
 ];
 
 const Card = ({ contentBox }: { contentBox: ContentBox }) => {
-  const { position, innerStyle, deadline, milestone, step } = contentBox;
+  const { is_left, innerStyle, deadline, milestone, step } = contentBox;
   return (
     <div
-      className={`absolute ${position}-0 h-40 w-1/3 rounded-2xl ${innerStyle} max-w-2xl`}
+      className={`absolute ${
+        is_left ? "left-0" : "right-0"
+      } h-40 w-1/3 rounded-2xl ${innerStyle} max-w-2xl`}
     >
       <div
         className="bg-gradient-to-r from-black via-blue-700 to-lime-900 p-1 rounded-md
@@ -82,7 +84,7 @@ const Card = ({ contentBox }: { contentBox: ContentBox }) => {
         <div className="flex flex-col justify-center items-center bg-slate-300 dark:bg-gray-900 p-2 rounded-md">
           <h2
             className={`${
-              position === "left"
+              is_left
                 ? "w-full text-left font-bold"
                 : "w-full text-right font-bold"
             }`}
@@ -91,7 +93,7 @@ const Card = ({ contentBox }: { contentBox: ContentBox }) => {
           </h2>
           <h3
             className={`${
-              position === "left"
+              is_left
                 ? "w-full font-semibold text-right pb-1 underline underline-offset-1"
                 : "w-full font-semibold text-left pb-1 underline underline-offset-1"
             }`}
@@ -109,8 +111,8 @@ const Card = ({ contentBox }: { contentBox: ContentBox }) => {
                           ? "stroke-green-600 fill-green-200"
                           : "stroke-sky-600 fill-sky-200"
                       } stroke-2`}
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
                       <circle cx="12" cy="12" r="11" />
                       <path
