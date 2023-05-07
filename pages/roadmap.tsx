@@ -1,11 +1,16 @@
 type Position = "left" | "right";
 
+type StepBox = {
+  info: string;
+  status: boolean;
+};
+
 type ContentBox = {
   deadline: string;
   milestone: string;
   position: Position;
-  step: string[];
-  style: string;
+  step: StepBox[];
+  innerStyle: string;
 };
 
 const content = [
@@ -13,58 +18,63 @@ const content = [
     deadline: "First Quarter of 2023",
     milestone: "Rise of an Ambition",
     step: [
-      "Release of the documentation",
-      "Release of the first models",
-      "Release of the website",
+      {
+        info: "Release of the documentation",
+        status: true,
+      },
+      {
+        info: "Release of the first models",
+        status: true,
+      },
+      {
+        info: "Release of the website",
+        status: true,
+      },
     ],
     position: "left" as Position,
-    style: "absolute left-0 top-[0rem] h-40 w-1/3 rounded-2xl",
+    innerStyle: "top-[0rem]",
   },
   {
     deadline: "Second Quarter of 2023",
     milestone: "Web 3 Integration Layer",
     step: [
-      "Solana integration on devnet",
-      "Release of Stable diffusion",
-      "Setup Authentification",
+      { info: "Solana integration on devnet", status: true },
+      { info: "Release of Stable diffusion", status: false },
+      { info: "Setup Authentification", status: false },
     ],
     position: "right" as Position,
-    style: "absolute right-0 top-[11rem] h-40 w-1/3 rounded-2xl",
+    innerStyle: "top-[11rem]",
   },
   {
     deadline: "Third Quarter of 2023",
     milestone: "Support to multiple target",
     step: [
-      "Aptos and Sui Integration on devnet",
-      "Stable version of Stable diffusion",
-      "Support mobile device",
+      { info: "Aptos and Sui Integration on devnet", status: false },
+      { info: "Stable version of Stable diffusion", status: false },
+      { info: "Support mobile device", status: false },
     ],
     position: "left" as Position,
-    style: "absolute left-0 top-[33rem] h-40 w-1/3 rounded-2xl",
+    innerStyle: "top-[22rem]",
   },
   {
     deadline: "Last Quarter of 2023",
     milestone: "Release in production",
     step: [
-      "Setup Continous Integration pipeline",
-      "Audit of Smart Contract",
-      "Going open source",
+      { info: "Setup Continous Integration pipeline", status: false },
+      { info: "Audit of Smart Contract", status: false },
+      { info: "Going open source", status: false },
     ],
     position: "right" as Position,
-    style: "absolute right-0 top-[44rem] h-40 w-1/3 rounded-2xl",
+    innerStyle: "top-[33rem]",
   },
 ];
 
 const Card = ({ contentBox }: { contentBox: ContentBox }) => {
-  const {
-    position,
-    style: containerStyle,
-    deadline,
-    milestone,
-    step,
-  } = contentBox;
+  const { position, innerStyle, deadline, milestone, step } = contentBox;
   return (
-    <div className={containerStyle}>
+    <div
+      className={`absolute ${position}-0 h-40 w-1/3 rounded-2xl ${innerStyle} max-w-2xl`}
+    >
       <div
         className="bg-gradient-to-r from-black via-blue-700 to-lime-900 p-1 rounded-md
     dark:bg-gradient-to-r dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500"
@@ -89,11 +99,26 @@ const Card = ({ contentBox }: { contentBox: ContentBox }) => {
             {milestone}
           </h3>
           <div className="py-1">
-            <ul className="w-full font-normal list-disc">
-              {step.map((data: String, index: number) => {
+            <ul className="w-full font-normal">
+              {step.map((data: StepBox, index: number) => {
                 return (
-                  <li key={index} className="list-inside">
-                    {data}
+                  <li key={index} className="flex items-center my-2">
+                    <svg
+                      className={`h-6 w-6 flex-none  ${
+                        data.status
+                          ? "stroke-green-600 fill-green-200"
+                          : "stroke-sky-600 fill-sky-200"
+                      } stroke-2`}
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="11" />
+                      <path
+                        d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9"
+                        fill="none"
+                      />
+                    </svg>
+                    <p className="ml-4">{data.info}</p>
                   </li>
                 );
               })}
