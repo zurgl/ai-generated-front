@@ -1,13 +1,13 @@
-import Image, { StaticImageData } from "next/image";
-import Link from "next/link";
 import { ToastContainer, toast, Theme, Id } from "react-toastify";
+import Image, { StaticImageData } from "next/image";
 import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "next-themes";
-
 import { Banner } from "#/ui/index";
+import Link from "next/link";
+
+import sentimentPicDark from "#/public/image/sentiment.jpg";
 import dialoguePicDark from "#/public/image/dialogue.jpg";
 import resumePicDark from "#/public/image/resume.jpg";
-import sentimentPicDark from "#/public/image/sentiment.jpg";
 
 type ModelCardDataT = {
   title: String;
@@ -16,6 +16,7 @@ type ModelCardDataT = {
   available: boolean;
   imageSrc: StaticImageData;
   priority: boolean;
+  link: string;
 };
 
 export async function getStaticProps() {
@@ -26,8 +27,9 @@ export async function getStaticProps() {
       content:
         "Don't have the time to read a long and complex article. This model is your perfect match.",
       imageSrc: resumePicDark,
-      priority: true,
+      priority: false,
       available: false,
+      link: "/models/summarize",
     },
     {
       title: "Sentiment analysis",
@@ -35,8 +37,9 @@ export async function getStaticProps() {
       content:
         "Want to build a tools to scan the mood of a market. This AI model should fit your needs.",
       imageSrc: sentimentPicDark,
-      priority: false,
+      priority: true,
       available: false,
+      link: "/model/sentiment",
     },
     {
       title: "Dialogue Model",
@@ -46,6 +49,7 @@ export async function getStaticProps() {
       imageSrc: dialoguePicDark,
       priority: false,
       available: false,
+      link: "/model/dialogue",
     },
   ];
 
@@ -72,6 +76,7 @@ const ModelCard = ({
           width={350}
           height={350}
           priority={data.priority}
+          placeholder="blur"
         />
         <div className="mx-auto py-2">
           <h3 className="font-bold text-2xl mb-2 text-gray-50 dark:text-black flex justify-center">
@@ -83,20 +88,21 @@ const ModelCard = ({
         </div>
       </div>
       <div className="flex items-center justify-center pt-6 h-28">
-        <div className="relative">
-          <div
-            className="absolute -inset-1 rounded-lg opacity-75 blur
+        <Link href={data.available ? data.link : "#"}>
+          <div className="relative">
+            <div
+              className="absolute -inset-1 rounded-lg opacity-75 blur
                 bg-gradient-to-r from-black via-blue-700 to-lime-900
                 dark:bg-gradient-to-r dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500"
-          ></div>
-          <button
-            className="relative rounded-lg bg-black px-7 py-4 text-xl text-yellow-50"
-            disabled={data.available}
-            onClick={notify}
-          >
-            <Link href="#">Get Started</Link>
-          </button>
-        </div>
+            ></div>
+            <button
+              className="relative rounded-lg bg-black px-7 py-4 text-xl text-yellow-50"
+              onClick={data.available ? () => {} : notify}
+            >
+              Get Started
+            </button>
+          </div>
+        </Link>
       </div>
     </div>
   );
@@ -108,9 +114,7 @@ export default function Card({
   modelCardData: ModelCardDataT[];
 }) {
   const { theme } = useTheme();
-  console.log(theme);
   const toastTheme = theme === "light" ? "dark" : "colored";
-  console.log(toastTheme);
 
   const notify = () =>
     toast.info("Model not yet available!", {
@@ -119,6 +123,7 @@ export default function Card({
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
+      pauseOnFocusLoss: false,
       draggable: false,
       progress: undefined,
       theme: toastTheme! as Theme,

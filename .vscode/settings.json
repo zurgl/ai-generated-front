@@ -12,7 +12,14 @@
   "files.exclude": {
     "**/node_modules": true,
     "**/.next": true,
-    "./pnpm-lock.yaml": true,
+    "tsconfig.json": false,
+    "next-env.d.ts": false,
+    ".prettierignore": false,
+    ".prettierrc.json": false,
+    ".vercelignore": false,
+    ".eslintignore": false,
+    "https_local_server": false,
+    "pnpm-lock.yaml": false,
     ".env": false
   },
   "typescript.tsdk": "./node_modules/typescript/lib",

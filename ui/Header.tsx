@@ -23,22 +23,22 @@ const headersData: HeadersDataT = {
   navLinks: [
     {
       isExternal: false,
-      link: "models",
+      link: "/models",
       text: "Models",
     },
     {
       isExternal: false,
-      link: "roadmap",
+      link: "/roadmap",
       text: "Roadmap",
     },
-    {
-      isExternal: true,
-      link: "https://documentation-pi-nine.vercel.app/",
-      text: "Documentation",
-    },
+    // {
+    //   isExternal: true,
+    //   link: "https://documentation-pi-nine.vercel.app/",
+    //   text: "Documentation",
+    // },
     {
       isExternal: false,
-      link: "newsletter",
+      link: "/newsletter",
       text: "Newsletter",
     },
   ],
@@ -68,7 +68,7 @@ export function Header() {
             return !dt.isExternal ? (
               <Link
                 key={index}
-                href={encodeURIComponent(dt.link)}
+                href={dt.link}
                 className="text-2xl font-semibold leading-6 dark:text-gray-50 text-gray-900 hover:underline hover:underline-offset-8 hover:decoration-4"
               >
                 {dt.text}

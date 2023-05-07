@@ -19,8 +19,8 @@ type ResumeJob = {
 };
 
 type StartModel = {
-  tag: String;
   json_str: String;
+  tag: String;
 };
 
 export const enum Tag {

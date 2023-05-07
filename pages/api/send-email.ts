@@ -2,36 +2,46 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import formData from "form-data";
 import Mailgun from "mailgun.js";
 
+const validate = (data: string | undefined, value: String) => {
+  if (data === undefined) {
+    throw new Error(`Following required value is undefined: ${value}`);
+  } else {
+    return data;
+  }
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   try {
-    console.log(process.env.MAILGUN_API_KEY!);
-    console.log(process.env.MAILGUN_DOMAIN!);
+    const { userEmail } = req.body;
+    const { MAILGUN_API_KEY, MAILGUN_DOMAIN } = process.env;
+
+    validate(userEmail, "USER EMAIL");
+    validate(MAILGUN_DOMAIN, "MAILGUN_DOMAIN");
+    validate(MAILGUN_API_KEY, "MAILGUN_API_KEY");
 
     const mailgun = new Mailgun(formData);
+
     const mg = mailgun.client({
       username: "api",
-      key: process.env.MAILGUN_API_KEY!,
+      key: MAILGUN_API_KEY!,
+      url: "https://api.eu.mailgun.net",
     });
 
-    console.log(mg);
+    const mail = {
+      from: "AI Generated <admin@ai-generated.dev>",
+      to: `${userEmail}`,
+      subject: "Welcome to AI Generated mailing list",
+      html: "<h1>Testing some Mailgun awesomness!</h1>",
+    };
 
-    mg.messages
-      .create(process.env.MAILGUN_DOMAIN!, {
-        from: "AI Generated mailgun@ai-generated.dev'",
-        to: ["elayar.yacine@gmail.com"],
-        subject: "Mailgun is working",
-        text: "Testing some Mailgun awesomness!",
-        html: "<h1>Testing some Mailgun awesomness!</h1>",
-      })
-      .then((msg) => console.log(msg))
-      .catch((err) => console.error(err));
+    const response = await mg.messages.create(MAILGUN_DOMAIN!, mail);
 
-    return res.status(200).json({ message: "Email sent successfully" });
+    return res.status(200).json({ success: response });
   } catch (error) {
     let errorMessage = error instanceof Error ? error.message : "Unknown Error";
-    res.status(500).json(errorMessage);
+    res.status(500).json({ error: errorMessage });
   }
 }

@@ -8,7 +8,7 @@ type CookieR = {
   user_id: String;
 };
 
-export default function useAuth(): [String | null] {
+export function useAuth(): [String | null] {
   const [userId, SetUserId] = useState<String | null>(null);
 
   const try_connect = useCallback(async () => {

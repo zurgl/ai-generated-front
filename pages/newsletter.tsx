@@ -2,31 +2,61 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function NewsLetter() {
-  const [_userEmail, setUserEmail] = useState<String | null>(null);
+const isEmail = (email: string) =>
+  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
-  const callAPI = async () => {
+const toastDefault = {
+  position: "bottom-center",
+  autoClose: 4000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: false,
+  draggable: true,
+  pauseOnFocusLoss: false,
+  progress: undefined,
+  theme: "dark",
+} as any;
+
+export default function NewsLetter() {
+  const [userEmail, setUserEmail] = useState<string>("");
+
+  const _subscribe = async () => {
     try {
-      const res = await fetch(`/api/send-email`);
-      const data = await res.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
+      if (!isEmail(userEmail!)) {
+        throw new Error(`Invalid email format`);
+      }
+
+      const response = await fetch(`/api/send-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userEmail: userEmail }),
+      });
+
+      if (!response.ok) {
+        const message = await response.json();
+        throw new Error(`Internal Server Error 500: ${message.error}`);
+      }
+
+      toast.success(`Succefully suscribed!`, toastDefault);
+    } catch (error) {
+      toast.error(`${error}`, toastDefault);
     }
   };
 
-  // const notify = () =>
-  //   toast.info("Subscription not yet open!", {
-  //     position: "bottom-center",
-  //     autoClose: 2500,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: false,
-  //     draggable: true,
-  //     pauseOnFocusLoss: false,
-  //     progress: undefined,
-  //     theme: "dark",
-  //   });
+  const notify = () =>
+    toast.info("Subscription not yet open!", {
+      position: "bottom-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      pauseOnFocusLoss: false,
+      progress: undefined,
+      theme: "dark",
+    });
 
   return (
     <div className=" bg-slate-200 dark:bg-slate-800 h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden">
@@ -56,8 +86,8 @@ export default function NewsLetter() {
             </defs>
           </svg>
         </div>
-        <div className="mx-auto max-w-2xl py-2">
-          <div className="text-center flex-col justify-center items-center">
+        <div className="mx-auto max-w-2xl pb-2">
+          <div className="text-center flex-col justify-center items-center -mt-8">
             <h1 className="text-6xl bg-clip-text text-transparent font-bold tracking-tight text-gray-900 pb-8 bg-gradient-to-r from-black via-blue-700 to-lime-900 dark:bg-gradient-to-r dark:from-purple-600 dark:via-pink-600 dark:to-blue-600">
               Subscribe
             </h1>
@@ -69,10 +99,7 @@ export default function NewsLetter() {
               and subscribe to the newsletter. Once a week content will be send
               to your mailbox.
             </article>
-            <div className="mt-10 flex max-w-md mx-auto">
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
+            <div className="mt-10 flex flex-row justify-around">
               <input
                 id="email-address"
                 name="email"
@@ -83,16 +110,22 @@ export default function NewsLetter() {
                   e.preventDefault;
                   setUserEmail(e.target.value);
                 }}
-                className="min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 text-white font-extrabold shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-cyan-800 sm:text-sm sm:leading-6 bg-gray-800"
+                className="min-w-0 w-2/3 rounded-full border-0 px-3.5 py-2 text-white font-extrabold shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset text-center focus:ring-cyan-700 dark:focus:ring-pink-900 bg-gray-800 h-16"
                 placeholder="Enter your email"
               />
-              <button
-                type="submit"
-                className="flex-none rounded-md bg-cyan-800 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ml-2"
-                onClick={callAPI}
-              >
-                Validate
-              </button>
+              <div className="relative">
+                <div
+                  className="absolute -inset-1 rounded-full opacity-80 blur
+                bg-gradient-to-r from-black via-blue-700 to-lime-900
+                dark:bg-gradient-to-r dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500"
+                ></div>
+                <button
+                  className="relative rounded-full bg-black px-7 py-4 text-xl text-yellow-50"
+                  onClick={notify}
+                >
+                  Validate
+                </button>
+              </div>
               <ToastContainer className="mb-40" />
             </div>
           </div>
@@ -101,12 +134,3 @@ export default function NewsLetter() {
     </div>
   );
 }
-
-/*
-curl -s --user 'api:1d9ab571a789e1444920c0f647c63dfa-87c34c41-26c61e12' \
-  https://api.mailgun.net/v3/mgx.dnb.lol/messages \
-  -F from='AI Generated mailgun@ai-generated.dev' \
-  -F to='elayar.yacine@gmail.com' \
-  -F subject='Mailgun is working' \
-  -F text='Testing some Mailgun awesomeness!'
-*/

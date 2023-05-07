@@ -1,8 +1,7 @@
-import useAuth from "#/hooks/use-auth";
-import { useSse } from "#/hooks/use-sse";
-import { logger } from "#/lib/logger";
 import { useEffect, useState } from "react";
-import { fetcher, Tag } from "#/lib/fetcher";
+
+import { fetcher, Tag, logger } from "#/lib";
+import { useSse, useAuth } from "#/hooks";
 import { URL_RUN_MODEL } from "#/lib/url";
 
 // header 92px
@@ -77,6 +76,5 @@ export default function Listen() {
 }
 
 /*
-6.88G
 Commissioned officers in the Union Army could be divided in several categories: general officers including Lieutenant General (added on March 2, 1864), Major Generals and Brigadier Generals; field officers including Colonels, Lieutenant Colonels and Majors; and company officers including Captains, First Lieutenants and Second Lieutenants. There was a further distinction between "line" officers – members of the artillery, cavalry or infantry branches – and staff officers, which were part of the various departments and bureaus of the War Department. All line officers outranked staff officers except in cases pertaining to their staff assignment, in which they received their orders from their respective department chiefs. Additionally, Regular general officers outranked Volunteer general officers of the same grade regardless of their date of commission, a feature which could become a subject of contention. The use of brevet ranks was also a common feature of the Union Army.
 */
