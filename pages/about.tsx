@@ -21,11 +21,6 @@ const Button = () => {
   );
 };
 
-// input[type=number]::-webkit-inner-spin-button,
-// input[type=number]::-webkit-outer-spin-button {
-//   opacity: 1;
-// }
-
 const ScaleInput = ({ input, setInput }: { input: number; setInput: any }) => {
   return (
     <div className="bg-slate-100 p-2">
