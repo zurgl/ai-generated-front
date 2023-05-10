@@ -1,9 +1,14 @@
 import { logger } from "#/lib/logger";
 import { URL_SSE } from "#/lib/url";
-import { Message, MessageType } from "#/lib/types";
+import { Message } from "#/lib/types";
 import { useCallback, useEffect, useState } from "react";
 
-const defaultMessage = { timestamp: 0, tag: "Health" } as Message;
+const defaultMessage = {
+  timestamp: 0,
+  message_type: "Health",
+  owner: "ROOT",
+  task_id: "0",
+} as Message;
 
 export function useSse(): [Message] {
   const [message, setMessage] = useState<Message>(defaultMessage);
@@ -22,17 +27,14 @@ export function useSse(): [Message] {
       sse.onmessage = (event) => {
         setMessage((_) => {
           const messageRaw = JSON.parse(event.data);
-          const messageKey = Object.keys(messageRaw)[0] as MessageType;
-          if (messageKey == "Health") {
-            //logger("DEBUG", "response", messageRaw[messageKey]);
-          }
+          const messageKey = Object.keys(messageRaw)[0];
           return messageRaw[messageKey];
         });
       };
 
       sse.onerror = (eventError) => {
         logger("ERROR", "sseErrorEvent", eventError);
-        //sse.close();
+        if (sse) sse.close();
       };
 
       setSse(sse);

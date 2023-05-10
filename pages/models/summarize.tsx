@@ -1,36 +1,57 @@
 import { useEffect, useState } from "react";
 
-import { fetcher, Tag, logger } from "#/lib";
+import { fetcher } from "#/lib";
 import { useSse, useAuth } from "#/hooks";
-import { URL_RUN_MODEL } from "#/lib/url";
+import { URL_PROCESS_TASK } from "#/lib/url";
+import { CommandType, ModelType, MessageType } from "#/lib/types";
 
-// header 92px
-// Footer 80px
-// =========
-// 172px
-
-type SummarizeParams = {
-  min_length: Number;
-  input: String;
+const stringifiedPrompt = (prompt: String) => {
+  return JSON.stringify(
+    {
+      input: prompt,
+    },
+    null,
+    2,
+  );
 };
 
-const stringifiedParamFromPrompt = (input: String) => {
-  let modelParams = {
-    min_length: 56,
-    input: input,
-  } as SummarizeParams;
-  return JSON.stringify(modelParams, null, 2);
+const MessageBox = ({ prediction }: { prediction: string }) => {
+  return (
+    <div className="flex flex-col justify-evenly items-center bg-lime-200 h-4/6 w-5/12">
+      <textarea
+        className="m-2 h-4/6 w-2/3 bg-gray-800 text-gray-300 font-medium placeholder:italic placeholder:text-zinc-400"
+        placeholder="Enter the text you want to resume ..."
+        value={JSON.parse(prediction!)}
+      />
+    </div>
+  );
+};
+
+const ErrorBox = () => {
+  return <div>Error Box</div>;
+};
+
+const WaitingBox = () => {
+  return <div>Waiting Box</div>;
 };
 
 function Content() {
-  const [_, setMessage] = useState<any>("No Message");
-  const [input, setInput] = useState<String | null>(null);
+  const [message, setMessage] = useState<any | null>(null);
+  const [error, setError] = useState<String | null>(null);
+  const [waiting, setWaiting] = useState<boolean>(false);
+  const [prompt, setPrompt] = useState<String | null>(null);
   const [stream] = useSse();
 
   useEffect(() => {
-    if (stream.tag !== "Health") {
-      logger("DEBUG", "message", stream);
-      setMessage(stream);
+    if (stream.message_type === MessageType.CommandFailed) {
+      setError("CommandFailed");
+    }
+    if (stream.message_type === MessageType.CommandSucess) {
+      setWaiting(true);
+    }
+    if (stream.message_type === MessageType.ModelPrediction) {
+      setMessage(stream.value);
+      setWaiting(false);
     }
   }, [stream]);
 
@@ -40,7 +61,7 @@ function Content() {
         <textarea
           className="m-2 h-4/6 w-2/3 bg-gray-800 text-gray-300 font-medium placeholder:italic placeholder:text-zinc-400"
           placeholder="Enter the text you want to resume ..."
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setPrompt(e.target.value)}
         />
         <button
           className="
@@ -51,21 +72,28 @@ function Content() {
           onClick={() =>
             fetcher(
               {
-                tag: Tag.StartWorkerWithJsonStr,
-                json_str: stringifiedParamFromPrompt(input!),
+                task_id: "25",
+                json_input: stringifiedPrompt(prompt!),
+                command_type: CommandType.Process,
+                model_type: ModelType.Summarize,
               },
-              URL_RUN_MODEL,
+              URL_PROCESS_TASK,
             )
           }
         >
           Resume
         </button>
       </div>
-      <div className="flex flex-col justify-evenly items-center bg-lime-200 h-4/6 w-5/12">
+      {/* <div className="flex flex-col justify-evenly items-center bg-lime-200 h-4/6 w-5/12">
         <pre className="bg-gray-800 text-white font-medium">
           {JSON.stringify(stream, null, 2)}
         </pre>
-      </div>
+      </div> */}
+      {waiting ? <WaitingBox /> : null}
+      {message ? (
+        <MessageBox prediction={JSON.stringify(message, null, 2)} />
+      ) : null}
+      {error ? <ErrorBox /> : null}
     </div>
   );
 }
@@ -74,7 +102,3 @@ export default function Listen() {
   const [userId] = useAuth();
   return userId ? <Content /> : null;
 }
-
-/*
-Commissioned officers in the Union Army could be divided in several categories: general officers including Lieutenant General (added on March 2, 1864), Major Generals and Brigadier Generals; field officers including Colonels, Lieutenant Colonels and Majors; and company officers including Captains, First Lieutenants and Second Lieutenants. There was a further distinction between "line" officers – members of the artillery, cavalry or infantry branches – and staff officers, which were part of the various departments and bureaus of the War Department. All line officers outranked staff officers except in cases pertaining to their staff assignment, in which they received their orders from their respective department chiefs. Additionally, Regular general officers outranked Volunteer general officers of the same grade regardless of their date of commission, a feature which could become a subject of contention. The use of brevet ranks was also a common feature of the Union Army.
-*/

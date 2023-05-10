@@ -1,44 +1,13 @@
-type AbortJob = {
+import { CommandType, ModelType } from "./types";
+
+export type ProcessModel = {
+  command_type: CommandType;
+  model_type: ModelType;
+  json_input: String;
   task_id: String;
-  tag: String;
 };
 
-type CreateJob = {
-  seed: number;
-  tag: String;
-};
-
-type PauseJob = {
-  task_id: String;
-  tag: String;
-};
-
-type ResumeJob = {
-  task_id: String;
-  tag: String;
-};
-
-type StartModel = {
-  json_str: String;
-  tag: String;
-};
-
-export const enum Tag {
-  StartWorker = "StartWorker",
-  AbortWorker = "AbortWorker",
-  PauseWorker = "PauseWorker",
-  ResumeWorker = "ResumeWorker",
-  StartWorkerWithJsonStr = "StartWorkerWithJsonStr",
-  IsDone = "IsDone",
-}
-
-export type CommandType =
-  | "StartWorker"
-  | "AbortWorker"
-  | "PauseWorker"
-  | "ResumeWorker";
-
-type PostData = ResumeJob | PauseJob | CreateJob | AbortJob | StartModel;
+type PostData = ProcessModel;
 
 const options = (data: PostData): RequestInit => {
   return {

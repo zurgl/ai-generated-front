@@ -1,52 +1,29 @@
 export type Message = {
-  user_id: String;
+  owner: String;
   task_id: String;
-  seed: number;
-  tag: MessageType;
-  status: StatusTask;
-  value?: String;
-  result?: String;
+  message_type: MessageType;
   timestamp?: number;
+  command_type?: CommandType;
+  error?: String;
+  value?: String;
 };
 
-export const messageField = [
-  "User Id",
-  "Task ID",
-  "Value",
-  "Result",
-  "Seed",
-  "Priority",
-  "Status",
-  "Action",
-];
+export const enum ModelType {
+  Sentiment = "Sentiment",
+  Summarize = "Summarize",
+}
 
-export type MessageType =
-  | "CommandSucess"
-  | "CommandFailed"
-  | "WorkerPaused"
-  | "WorkerResumed"
-  | "WorkerValue"
-  | "WorkerResult"
-  | "WorkerAborted"
-  | "WorkerString"
-  | "Health";
+export const enum CommandType {
+  Process = "Process",
+}
 
-export type ValidMessageType =
-  | "WorkerPaused"
-  | "WorkerResumed"
-  | "WorkerValue"
-  | "WorkerAborted"
-  | "WorkerResult";
-
-export type TaskID = String;
-
-export type TasksMessage = Map<TaskID, Message>;
-
-export type StatusTask = "active" | "killed" | "done" | "paused";
-
-export type ModelParams = {
-  model_type: String;
-  context_input: String;
-  temperature: number;
-  max_length: number;
-};
+export const enum MessageType {
+  Health = "Health",
+  CommandSucess = "CommandSucess",
+  CommandFailed = "CommandFailed",
+  ModelKilled = "ModelKilled",
+  ModelStarted = "ModelStarted",
+  ModelLoaded = "ModelLoaded",
+  ModelPrediction = "ModelPrediction",
+  ModelError = "ModelError",
+}

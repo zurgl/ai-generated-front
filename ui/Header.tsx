@@ -31,11 +31,11 @@ const headersData: HeadersDataT = {
       link: "/roadmap",
       text: "Roadmap",
     },
-    // {
-    //   isExternal: true,
-    //   link: "https://documentation-pi-nine.vercel.app/",
-    //   text: "Documentation",
-    // },
+    {
+      isExternal: false,
+      link: "/about",
+      text: "About",
+    },
     {
       isExternal: false,
       link: "/newsletter",

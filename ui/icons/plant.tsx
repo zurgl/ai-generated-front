@@ -2,16 +2,16 @@ import type { ReactElement } from "react";
 
 export function PlanIcon({
   theme,
-  windowSize,
-}: {
+}: // windowSize,
+{
   theme: String;
-  windowSize: {
-    width: number;
-    height: number;
-  };
+  // windowSize: {
+  //   width: number;
+  //   height: number;
+  // };
 }): ReactElement {
-  console.log(windowSize);
-  const { width, height } = windowSize;
+  //console.log(windowSize);
+  //const { width, height } = windowSize;
   return (
     <svg
       fill={theme === "dark" ? "#fff" : "#000"}

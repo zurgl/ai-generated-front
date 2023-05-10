@@ -28,7 +28,7 @@ export async function getStaticProps() {
         "Don't have the time to read a long and complex article. This model is your perfect match.",
       imageSrc: resumePicDark,
       priority: false,
-      available: false,
+      available: true,
       link: "/models/summarize",
     },
     {

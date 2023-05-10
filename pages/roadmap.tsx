@@ -1,5 +1,3 @@
-type Position = "left" | "right";
-
 type StepBox = {
   info: string;
   status: boolean;
