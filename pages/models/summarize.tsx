@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { fetcher } from "#/lib";
+import { fetcher, logger } from "#/lib";
 import { useSse, useAuth } from "#/hooks";
 import { URL_PROCESS_TASK } from "#/lib/url";
 import { CommandType, ModelType, MessageType } from "#/lib/types";
@@ -44,12 +44,15 @@ function Content() {
 
   useEffect(() => {
     if (stream.message_type === MessageType.CommandFailed) {
+      logger("DEBUG", "CommandFailed", stream);
       setError("CommandFailed");
     }
     if (stream.message_type === MessageType.CommandSucess) {
+      logger("DEBUG", "CommandSucess", stream);
       setWaiting(true);
     }
     if (stream.message_type === MessageType.ModelPrediction) {
+      logger("DEBUG", "ModelPrediction", stream);
       setMessage(stream.value);
       setWaiting(false);
     }
