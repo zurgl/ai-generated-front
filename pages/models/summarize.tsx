@@ -75,7 +75,7 @@ function Content() {
           onClick={() =>
             fetcher(
               {
-                task_id: "25",
+                task_id: "87",
                 json_input: stringifiedPrompt(prompt!),
                 command_type: CommandType.Process,
                 model_type: ModelType.Summarize,
