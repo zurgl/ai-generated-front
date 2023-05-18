@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/router";
 
 import {
   SunIcon,
@@ -46,9 +47,10 @@ const headersData: HeadersDataT = {
 
 export function Header() {
   const { theme, setTheme } = useTheme();
+  const { pathname } = useRouter();
 
-  return (
-    <header className="inset-x-0 z-50 px-4 bg-slate-50 dark:bg-black">
+  return pathname !== "/about" ? (
+    <header className="z-50 px-4 bg-slate-50 dark:bg-black">
       <nav
         className="flex items-center justify-between p-6 lg:px-8 border-b-4 border-black dark:border-pink-900"
         aria-label="Global"
@@ -131,5 +133,5 @@ export function Header() {
         </div>
       </nav>
     </header>
-  );
+  ) : null;
 }

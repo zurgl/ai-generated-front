@@ -7,6 +7,7 @@ import { Inter } from "@next/font/google";
 import { Header, Footer } from "#/ui/index";
 import { Analytics } from "@vercel/analytics/react";
 import { useMounted } from "#/hooks";
+import { useRouter } from "next/router";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,17 +16,22 @@ const inter = Inter({
 
 export default function App({ Component, pageProps }: AppProps) {
   const mounted = useMounted();
+  const { pathname } = useRouter();
 
   return mounted ? (
     <>
       <ThemeProvider attribute="class" enableSystem={false}>
-        <Header />
         <div
-          className={`${inter.variable} font-sans overflow-auto no-scrollbar`}
+          className={`${inter.variable} ${
+            pathname === "/about"
+              ? "bg-slate-900 leading-relaxed text-slate-400 antialiased selection:bg-teal-300 selection:text-teal-900"
+              : "overflow-hidden flex h-screen flex-col"
+          }`}
         >
+          <Header />
           <Component {...pageProps} />
+          <Footer />
         </div>
-        <Footer />
       </ThemeProvider>
       {process.env.ENV === "PROD" ? <Analytics /> : null}
     </>

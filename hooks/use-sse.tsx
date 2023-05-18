@@ -28,6 +28,7 @@ export function useSse(): [Message] {
         setMessage((_) => {
           const messageRaw = JSON.parse(event.data);
           const messageKey = Object.keys(messageRaw)[0];
+          logger("DEBUG", "Message", JSON.parse(messageRaw[messageKey]?.value));
           return messageRaw[messageKey];
         });
       };

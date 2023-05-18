@@ -17,12 +17,12 @@ module.exports = {
         sans: ["var(--font-inter)", ...fontFamily.sans],
       },
       backgroundImage: {
-        logo: "url('/logo.svg')",
-        black_circuit: "url('/dark-circuit-board.svg')",
         plant: "url('/svg/plant.svg')",
         "plant-dark": "url('/svg/plant-dark.svg')",
+        // not used, but keep as an example
         "gradient-radial": "radial-gradient(circle, var(--tw-gradient-stops))",
       },
+      // not used, but keep as an example
       colors: {
         ocean: {
           10: "#475dc8",

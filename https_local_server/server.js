@@ -18,6 +18,7 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   }).listen(8443, (err) => {
     if (err) throw err;
+    console.log(process.env.NODE_ENV);
     console.log("> Ready on https://localhost:8443");
   });
 });

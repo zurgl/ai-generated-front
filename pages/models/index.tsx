@@ -131,8 +131,10 @@ export default function Card({
 
   return (
     <div
-      className="h-[calc(100vh_-_172px)] bg-gradient-radial from-slate-400 to-white
-    dark:bg-gradient-radial dark:from-gray-800 dark:to-black overflow-auto"
+      className="
+        flex grow flex-col
+        bg-gradient-radial from-slate-400 to-white
+        dark:bg-gradient-radial dark:from-gray-800 dark:to-black overflow-auto"
     >
       <Banner />
       <div className="w-screen h-[calc(100vh_-_240px)] flex justify-end items-center py-20">

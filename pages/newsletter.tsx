@@ -59,7 +59,7 @@ export default function NewsLetter() {
     });
 
   return (
-    <div className=" bg-slate-200 dark:bg-slate-800 h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden">
+    <div className="bg-slate-200 dark:bg-slate-900 flex grow justify-center items-center overflow-hidden">
       <div className="relative isolate px-6">
         <div className="absolute -top-64 -z-10 transform-gpu blur-3xl opacity-80">
           <svg

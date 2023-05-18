@@ -132,7 +132,13 @@ const Card = ({ contentBox }: { contentBox: ContentBox }) => {
 
 export default function Roadmap() {
   return (
-    <div className="dark:bg-plant-dark bg-plant h-[calc(100vh_-_172px)] flex justify-center items-center overflow-hidden w-screen, bg-center bg-no-repeat bg-contain bg-slate-200 dark:bg-black">
+    <div
+      className="
+        dark:bg-plant-dark bg-plant bg-center bg-no-repeat bg-contain
+        flex grow flex-col justify-center items-center overflow-hidden w-screen
+         bg-slate-200 dark:bg-slate-900
+      "
+    >
       <div className="relative w-9/12 h-5/6">
         {content.map((contentBox: ContentBox, index: number) => {
           return <Card contentBox={contentBox} key={index} />;
