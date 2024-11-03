@@ -11,7 +11,7 @@
   "editor.wordWrap": "wordWrapColumn",
   "files.exclude": {
     "**/node_modules": true,
-    "**/.next": true,
+    "**/.next": false,
     "tsconfig.json": false,
     "next-env.d.ts": false,
     ".prettierignore": false,
